@@ -1,17 +1,17 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const GetProducts = () => {
     let [products, setProducts] =useState("")
     let [error, setError] =useState("")
     let [loading, setLoading] =useState("")
 
-    const getProduct =async () =>{
+    const getProducts =async () =>{
         setError("");
         setLoading("Please Wait.....Receiving products")
         try {
             const response =await axios.get("https;//ndege25.pythonanywhere.com/api/getproducts")
-            console.log(response)
+            setProducts(response.data)
             setLoading("")
         } catch (error) {
             setLoading("")
@@ -19,7 +19,11 @@ const GetProducts = () => {
 
         }
     }
-    getProducts()
+// useEffect(function, dependancy)
+
+useEffect(()=>{
+    getProducts();
+}, [])
     return ( 
         <div className="row">
             <b className="text-warning">{loading}</b>
@@ -28,6 +32,8 @@ const GetProducts = () => {
             {/* carousel */}
             {/* content */}
             {/* footer */}
+
+            {products.map()}
             <div className="col-md-3 justify-content-center mb-4">
                 <div className="card shadow">
                     <img src="logo512.png" alt="" />
